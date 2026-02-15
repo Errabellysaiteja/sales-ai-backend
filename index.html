@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Sales Coach Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--primary:#2563eb;
+--success:#22c55e;
+--danger:#ef4444;
+--bg:#f1f5f9;
+--card:#ffffff;
+--border:#e2e8f0;
+}
+
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:#1e293b;
+}
+
+/* HEADER */
+header{
+background:linear-gradient(135deg,#2563eb,#1e40af);
+color:white;
+padding:40px 20px;
+text-align:center;
+}
+header h1{
+margin:0;
+font-size:2rem;
+font-weight:800;
+}
+header p{
+opacity:.85;
+margin-top:8px;
+}
+
+/* CONTAINER */
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px 20px;
+}
+
+/* UPLOAD CARD */
+.upload-card{
+background:var(--card);
+border-radius:16px;
+padding:40px;
+box-shadow:0 10px 30px rgba(0,0,0,.05);
+border:1px solid var(--border);
+text-align:center;
+transition:.3s;
+}
+.upload-card:hover{
+transform:translateY(-3px);
+}
+
+.custom-file-upload{
+display:inline-block;
+padding:12px 24px;
+background:#f8fafc;
+border:1px solid var(--border);
+border-radius:8px;
+cursor:pointer;
+font-weight:500;
+}
+
+.btn{
+background:var(--primary);
+color:white;
+padding:14px 30px;
+border:none;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+margin-top:20px;
+box-shadow:0 5px 15px rgba(37,99,235,.3);
+transition:.2s;
+}
+.btn:hover{
+background:#1d4ed8;
+transform:translateY(-2px);
+}
+
+/* TRANSCRIPT BELOW UPLOAD */
+.transcript-preview{
+margin-top:30px;
+background:white;
+border-radius:12px;
+padding:20px;
+border:1px solid var(--border);
+display:none;
+}
+.transcript-box{
+max-height:300px;
+overflow:auto;
+background:#f8fafc;
+padding:15px;
+border-radius:8px;
+font-size:.9rem;
+}
+
+/* DASHBOARD */
+#dashboardView{
+display:none;
+margin-top:40px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:24px;
+border:1px solid var(--border);
+box-shadow:0 5px 15px rgba(0,0,0,.04);
+}
+
+.card-title{
+font-weight:600;
+margin-bottom:15px;
+}
+
+.score-circle{
+width:130px;
+height:130px;
+margin:auto;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:2rem;
+font-weight:700;
+color:var(--success);
+background:conic-gradient(var(--success) calc(var(--score,0)*1%), #e2e8f0 0);
+position:relative;
+}
+.score-circle::before{
+content:attr(data-score);
+position:absolute;
+width:100px;
+height:100px;
+background:white;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+ul{
+padding-left:18px;
+margin:0;
+}
+li{
+margin-bottom:8px;
+}
+
+.loader{
+display:none;
+text-align:center;
+margin-top:20px;
+}
+.spinner{
+border:4px solid #e2e8f0;
+border-top:4px solid var(--primary);
+width:40px;
+height:40px;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin:auto;
+}
+@keyframes spin{
+0%{transform:rotate(0)}
+100%{transform:rotate(360deg)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>AI Sales Coach Pro</h1>
+<p>Upload a call recording and receive AI-powered performance insights</p>
+</header>
+
+<div class="container">
+
+<div class="upload-card">
+<h2>Upload Sales Call (.mp3)</h2>
+
+<label for="audioInput" class="custom-file-upload">
+Choose MP3 File
+</label>
+<input type="file" id="audioInput" accept=".mp3" hidden onchange="updateFileName()">
+
+<div id="fileNameDisplay" style="margin-top:10px;font-weight:500;"></div>
+
+<button onclick="analyzeCall()" class="btn">Analyze Conversation</button>
+
+<div class="loader" id="loader">
+<div class="spinner"></div>
+<p>Analyzing with AI...</p>
+</div>
+</div>
+
+<!-- TRANSCRIPT BELOW UPLOAD -->
+<div class="transcript-preview" id="transcriptPreview">
+<h3>Full Transcript</h3>
+<div id="transcriptText" class="transcript-box"></div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboardView">
+<h2 style="margin-bottom:20px;">AI Performance Report</h2>
+
+<div class="grid">
+
+<div class="card" style="text-align:center;">
+<div class="card-title">Overall Score</div>
+<div id="scoreCircle" class="score-circle" data-score="0" style="--score:0;"></div>
+</div>
+
+<div class="card">
+<div class="card-title">Executive Summary</div>
+<div id="summaryText"></div>
+</div>
+
+<div class="card">
+<div class="card-title">Strengths</div>
+<ul id="strengthsList"></ul>
+</div>
+
+<div class="card">
+<div class="card-title">Areas for Improvement</div>
+<ul id="weaknessesList"></ul>
+</div>
+
+<div class="card">
+<div class="card-title">Objection Handling</div>
+<div id="objectionText"></div>
+</div>
+
+<div class="card">
+<div class="card-title">Recommended Next Steps</div>
+<div id="nextStepsText"></div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+function updateFileName(){
+const input=document.getElementById('audioInput');
+if(input.files.length>0){
+document.getElementById('fileNameDisplay').innerText="Selected: "+input.files[0].name;
+}
+}
+
+function populateList(id,items){
+const list=document.getElementById(id);
+list.innerHTML='';
+if(Array.isArray(items)){
+items.forEach(item=>{
+const li=document.createElement('li');
+li.textContent=item;
+list.appendChild(li);
+});
+}
+}
+
+function parseAIJson(text){
+try{
+let cleaned=text.replace(/```json/g,'').replace(/```/g,'').trim();
+return JSON.parse(cleaned);
+}catch(e){return null;}
+}
+
+async function analyzeCall(){
+
+const fileInput=document.getElementById('audioInput');
+if(!fileInput.files[0]) return alert("Select a file first");
+
+const formData=new FormData();
+formData.append("file",fileInput.files[0]);
+
+document.getElementById('loader').style.display='block';
+
+try{
+
+const response=await fetch('http://localhost:8000/analyze',{
+method:'POST',
+body:formData
+});
+
+const data=await response.json();
+
+document.getElementById('loader').style.display='none';
+
+document.getElementById('transcriptText').innerText=data.transcript||"No transcript.";
+document.getElementById('transcriptPreview').style.display='block';
+
+document.getElementById('summaryText').innerText=data.analysis||"";
+document.getElementById('objectionText').innerText=data.objections||"";
+
+const report=parseAIJson(data.final_report);
+
+if(report){
+const score=report.score||0;
+const circle=document.getElementById('scoreCircle');
+circle.style.setProperty('--score',score);
+circle.setAttribute('data-score',score);
+
+populateList('strengthsList',report.strengths);
+populateList('weaknessesList',report.weaknesses);
+
+document.getElementById('nextStepsText').innerText=
+Array.isArray(report.next_steps)?
+report.next_steps.join('\n'):
+report.next_steps||"";
+}
+
+document.getElementById('dashboardView').style.display='block';
+
+}catch(error){
+document.getElementById('loader').style.display='none';
+alert("Error: "+error.message);
+}
+
+}
+
+</script>
+
+</body>
+</html>
