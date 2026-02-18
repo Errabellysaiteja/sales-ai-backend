@@ -23,12 +23,12 @@ This platform acts as an automated "Sales Manager" for teams. It allows users to
 
 | Component | Technology |
 | :--- | :--- |
-| **Backend Framework** | Python 3.10, FastAPI, Uvicorn |
+| **Backend Framework** | Python 3.10, FastAPI |
 | **AI & LLM** | LangChain, Mistral AI API |
-| **Vector Database** | FAISS (CPU) |
+| **Vector Database** | FAISS |
 | **Cloud Services** | AWS S3, AWS Transcribe |
-| **Frontend** | HTML5, CSS3, JavaScript (Vanilla) |
-| **Deployment** | Render (Backend), Vercel (Frontend) |
+| **Frontend** | HTML5, CSS3, JavaScript |
+| **Deployment** | Vercel |
 
 ---
 
@@ -53,11 +53,11 @@ venv\Scripts\activate
 # Mac/Linux
 source venv/bin/activate
 
-3. Install Dependencies
+3. Install Dependencies-
 pip install -r requirements.txt
 
-4. Configure Environment Variables
+4. Configure Environment Variables-
 Create a file named .env in the root directory and add your keys:
 
-5. Run the Server
+5. Run the Server-
 python main.py
