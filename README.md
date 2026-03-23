@@ -64,5 +64,12 @@ python main.py
 
 # ScreenShot
 
-<img width="1919" height="1079" alt="Screenshot 2026-02-15 102913" src="https://github.com/user-attachments/assets/b8b60c87-58c8-4cb9-8743-88d97889cb85" />
+<img width="1919" height="1079" alt="Screenshot 2026-02-15 102913" src="https://github.com/user-attachments/assets/17d957cd-8add-4303-8683-24d57be38144" />
+
+<img width="1919" height="1079" alt="Screenshot 2026-02-15 102927" src="https://github.com/user-attachments/assets/d34a25ea-5ee7-4b01-a816-ec461aad825c" />
+<img width="1919" height="1076" alt="Screenshot 2026-02-15 102940" src="https://github.com/user-attachments/assets/f30efaa7-15d2-4698-bcad-45b438c44ff2" />
+<img width="1919" height="1079" alt="Screenshot 2026-02-15 103003" src="https://github.com/user-attachments/assets/3ccddbbe-5670-468e-a480-161de429b3b8" />
+
+<img width="1919" height="1079" alt="Screenshot 2026-02-15 103021" src="https://github.com/user-attachments/assets/d8d0e8ef-f393-40d3-a5fa-37227eb66397" />
+
 
