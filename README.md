@@ -61,3 +61,8 @@ Create a file named .env in the root directory and add your keys:
 
 5. Run the Server-
 python main.py
+
+# ScreenShot
+
+<img width="1919" height="1079" alt="Screenshot 2026-02-15 102913" src="https://github.com/user-attachments/assets/b8b60c87-58c8-4cb9-8743-88d97889cb85" />
+
